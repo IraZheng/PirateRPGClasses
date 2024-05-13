@@ -1,11 +1,11 @@
 ###############################################################################
 #Title: Pirate Adventure RPG
 #Class: CS 30
-#Assignment:
+#Assignment:Object-Orientated Programming: RPG - Classes
 #Coder: Ira Zheng
-#Version: 3.0
+#Version: 4.0
 ###############################################################################
-'''A pirate adventure game?'''
+'''A text-based RPG where you fight pirates'''
 ###############################################################################
 # Imports and Global Variables ------------------------------------------------
 import map
@@ -15,10 +15,12 @@ Player1 = player.Player(0, 1, 0, False, False, False)
 
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
-    '''allows the player to do different things in different encounters'''
-    #print("Passed the check")
-    #print(room)
-    #print(action)
+    '''
+    allows the player to do different things in different encounters
+    action: the action the player is taking
+    room: the room the player is in
+    '''
+    #if room.actions[action] = True, the action has already been completed
     if "Camp" in str(room):
         if action == "Fight the pirates":
             room.actions[action] = True
