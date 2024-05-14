@@ -11,7 +11,7 @@
 import map
 import player
 
-Player1 = player.Player(0, 1, 0, False, False, False)
+Player1 = player.Player(0, 1, 0, False, False, False, 10)
 
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
@@ -113,7 +113,9 @@ def mainMenu():
         for action in playerLocation.actions:
             if (not playerLocation.actions[action]):
                 print(f'-{action}')
-        print("-Inventory\n-Move\n-Map\n-Quit")
+        if Player1.coconuts > 0:
+            print("-Use a coconut")
+        print("-Check status\n-Inventory\n-Move\n-Map\n-Quit")
         #takes user's choice
         choice = input("-").capitalize()
         if choice == "Move":
@@ -130,6 +132,11 @@ def mainMenu():
         elif (choice in playerLocation.actions and 
               not playerLocation.actions[choice]):
             encounterActions(choice, playerLocation)
+        elif Player1.coconuts > 0 and choice == "Use a coconut":
+            Player1.coconuts -= 1
+            Player1.changeHP(1)
+        elif choice == "Check status":
+            Player1.printStatus()
         elif choice == "Inventory":
             Player1.printInv()
         elif choice == "Map":

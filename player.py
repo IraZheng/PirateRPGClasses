@@ -5,7 +5,8 @@ import map
 
 
 class Player():
-    def __init__(self, posX, posY, coconuts, hasShovel, hasKey, hasTreasure):
+    def __init__(self, posX, posY, coconuts, hasShovel, hasKey, hasTreasure, hp):
+        self.hp = hp
         #position
         self.posX = posX
         self.posY = posY
@@ -73,3 +74,10 @@ class Player():
             print("-The pirate's treasure")
         else:
             print("-No treasure")
+
+    def changeHP(self, amountToChange):
+        self.hp += amountToChange
+        print(f"you have {self.hp} hp")
+
+    def printStatus(self):
+        print(f"you have {self.hp} hp")
