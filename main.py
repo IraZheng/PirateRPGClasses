@@ -108,44 +108,56 @@ def mainMenu():
     while not Player1.hasTreasure:
         playerLocation = map.islandMap[Player1.posY][Player1.posX]
         print(playerLocation.description)
-        print("What do you do?")
-        #prints action as an option if action is not completed yet
-        for action in playerLocation.actions:
-            if (not playerLocation.actions[action]):
-                print(f'-{action}')
-        if Player1.coconuts > 0:
-            print("-Use a coconut")
-        print("-Check status\n-Inventory\n-Move\n-Map\n-Quit")
-        #takes user's choice
-        choice = input("-").capitalize()
-        if choice == "Move":
-            if ("Camp" in str(playerLocation) or 
-                "Patrol" in str(playerLocation)):
-                if playerLocation.actions["Fight the pirates"]:
-                    print("Okay!\n")
-                    Player1.move()
+        if ("Trap" in str(playerLocation) and 
+            not playerLocation.actions["Disable trap"]):
+            print("You take damage from the spikes!")
+            Player1.ChangeHP(-1)
+        if Player1.hp >= 1:
+            print("What do you do?")
+            #prints action as an option if action is not completed yet
+            for action in playerLocation.actions:
+                if (not playerLocation.actions[action]):
+                    print(f'-{action}')
+            if Player1.coconuts > 0:
+                print("-Use a coconut")
+            print("-Check status\n-Inventory\n-Move\n-Map\n-Quit")
+            #takes user's choice
+            choice = input("-").capitalize()
+            #choice handler
+            if choice == "Move":
+                #if there are pirates, restrict movement
+                if ("Camp" in str(playerLocation) or 
+                    "Patrol" in str(playerLocation)):
+                    if playerLocation.actions["Fight the pirates"]:
+                        print("Okay!\n")
+                        Player1.Move()
+                    else:
+                        print("The pirates are blocking your way!")
                 else:
-                    print("The pirates are blocking your way!")
+                    print("Okay!\n")
+                    Player1.Move()
+            #if it is a valid action and the action is not completed yet
+            elif (choice in playerLocation.actions and 
+                  not playerLocation.actions[choice]):
+                encounterActions(choice, playerLocation)
+            #heals by 1 when using a coconut
+            elif Player1.coconuts > 0 and choice == "Use a coconut":
+                Player1.coconuts -= 1
+                Player1.ChangeHP(1)
+            elif choice == "Check status":
+                Player1.PrintStatus()
+            elif choice == "Inventory":
+                Player1.PrintInv()
+            elif choice == "Map":
+                map.viewMap()
+            elif choice == "Quit":
+                print("\nYou have quit your adventure")
+                break
             else:
-                print("Okay!\n")
-                Player1.move()
-        elif (choice in playerLocation.actions and 
-              not playerLocation.actions[choice]):
-            encounterActions(choice, playerLocation)
-        elif Player1.coconuts > 0 and choice == "Use a coconut":
-            Player1.coconuts -= 1
-            Player1.changeHP(1)
-        elif choice == "Check status":
-            Player1.printStatus()
-        elif choice == "Inventory":
-            Player1.printInv()
-        elif choice == "Map":
-            map.viewMap()
-        elif choice == "Quit":
-            print("\nYou have quit your adventure")
-            break
+                print("That's not a valid option!")
         else:
-            print("That's not a valid option!")
+            print("\nYou have died")
+            break
             
 
 def intro():

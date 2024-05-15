@@ -5,7 +5,8 @@ import map
 
 
 class Player():
-    def __init__(self, posX, posY, coconuts, hasShovel, hasKey, hasTreasure, hp):
+    def __init__(self, posX, posY, coconuts, hasShovel, 
+                 hasKey, hasTreasure, hp):
         self.hp = hp
         #position
         self.posX = posX
@@ -17,7 +18,7 @@ class Player():
         self.hasTreasure = hasTreasure
 
 
-    def move(self):
+    def Move(self):
         """Allows players to move through the map"""
         while True:
             print("Which direction do you move?")
@@ -58,7 +59,7 @@ class Player():
                       '"east", "west" or "back"\n')
 
 
-    def printInv(self):
+    def PrintInv(self):
         """prints player's inventory"""
         print("\nIn your inventory, you have:")
         print(f'-{self.coconuts} coconuts')
@@ -75,9 +76,9 @@ class Player():
         else:
             print("-No treasure")
 
-    def changeHP(self, amountToChange):
+    def ChangeHP(self, amountToChange):
         self.hp += amountToChange
         print(f"you have {self.hp} hp")
 
-    def printStatus(self):
+    def PrintStatus(self):
         print(f"you have {self.hp} hp")
