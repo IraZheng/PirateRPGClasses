@@ -8,22 +8,14 @@ from tabulate import tabulate
 #Tile classes
 class Tile():
     def __init__(self):
+        """this is always overwritten in the child classes"""
         self.description = "description"
         self.actions = {"actions": False}
 
 
     def PrintDescription(self):
+        """Prints description of the tile"""
         print(self.description)
-
-
-    def PrintActions(self):
-        print(self.actions)
-
-
-    def Act(self, action):
-        if action in self.actions and not self.actions[action]:
-            print(f"{action} completed")
-            self.actions[action] = True
 
 
 class Camp(Tile):

@@ -8,11 +8,16 @@
 '''A text-based RPG where you fight pirates'''
 ###############################################################################
 # Imports and Global Variables ------------------------------------------------
+import enemy
 import map
 import player
 
 Player1 = player.Player(0, 1, 0, False, False, False, 10)
 
+"""Pirate1 = enemy.Pirate(0, 2, 10, 1, 1, 0)
+Pirate2 = enemy.Pirate(0, 2, 10, 1, 1, 0)
+enemyDict = {Pirate1: map.islandMap[Pirate1.posY][Pirate1.posX], 
+             Pirate2: map.islandMap[Pirate2.posY][Pirate2.posX]}"""
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
     '''
@@ -23,6 +28,7 @@ def encounterActions(action, room):
     #if room.actions[action] = True, the action has already been completed
     if "Camp" in str(room):
         if action == "Fight the pirates":
+            #Combat()
             room.actions[action] = True
             room.description = "\nIt's where you fought a pirate camp"
             print("You beat the pirates")
@@ -36,6 +42,7 @@ def encounterActions(action, room):
             print("You have picked up the key")
     elif "Patrol" in str(room):
         if action == "Fight the pirates":
+            #Combat()
             room.actions[action] = True
             room.description = "\nIt's where you fought a pirate patrol"
             print("You beat the pirates")
@@ -100,6 +107,23 @@ def encounterActions(action, room):
             print(f'You have {Player1.coconuts} coconuts')
 
 
+"""def Combat():
+    combatList = []
+    for object in enemyDict:
+        if enemyDict[object] == map.islandMap[Player1.posY][Player1.posX]:
+            combatList.append(object)
+    print("\nYou have entered combat")
+    while True:
+        for target in range(len(combatList)):
+            print(f"-{combatList[target]}{target + 1}")
+        choice = input("-")
+        if choice in combatList:
+            break
+        else:
+            print(combatList)
+            break"""
+
+
 def mainMenu():
     """
     Main menu
@@ -108,6 +132,7 @@ def mainMenu():
     while not Player1.hasTreasure:
         playerLocation = map.islandMap[Player1.posY][Player1.posX]
         print(playerLocation.description)
+        #if you are in trap room
         if ("Trap" in str(playerLocation) and 
             not playerLocation.actions["Disable trap"]):
             print("You take damage from the spikes!")

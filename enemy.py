@@ -1,9 +1,10 @@
 ###############################################################################
 # Enemy Module
 ###############################################################################
-
 class Enemy():
-    def __init__(self, hp, attack, attackCooldown, attackTimer):
+    def __init__(self, posX, posY, hp, attack, attackCooldown, attackTimer):
+        self.posX = posX
+        self.posY = posY
         self.hp = hp
         self.attack = -attack
         self.attackCooldown = attackCooldown
@@ -23,3 +24,4 @@ class Pirate(Enemy):
     def Check(self):
         print(f"hp: {self.hp}")
         print(f"attack: {self.attack}")
+
