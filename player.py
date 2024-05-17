@@ -6,8 +6,7 @@ import map
 
 class Player():
     def __init__(self, posX, posY, coconuts, hasShovel, 
-                 hasKey, hasTreasure, hp):
-        self.hp = hp
+                 hasKey, hasTreasure, hp, attack):
         #position
         self.posX = posX
         self.posY = posY
@@ -16,6 +15,9 @@ class Player():
         self.hasShovel = hasShovel
         self.hasKey = hasKey
         self.hasTreasure = hasTreasure
+        #combat
+        self.hp = hp
+        self.attack = -attack
 
 
     def Move(self):
@@ -82,3 +84,4 @@ class Player():
 
     def PrintStatus(self):
         print(f"you have {self.hp} hp")
+        print(f"you have {-self.attack} attack")

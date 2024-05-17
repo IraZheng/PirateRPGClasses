@@ -12,12 +12,12 @@ import enemy
 import map
 import player
 
-Player1 = player.Player(0, 1, 0, False, False, False, 10)
+Player1 = player.Player(0, 1, 0, False, False, False, 10, 1)
 
-"""Pirate1 = enemy.Pirate(0, 2, 10, 1, 1, 0)
-Pirate2 = enemy.Pirate(0, 2, 10, 1, 1, 0)
+Pirate1 = enemy.Pirate(0, 2, 3, 1, 2, 0)
+Pirate2 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 enemyDict = {Pirate1: map.islandMap[Pirate1.posY][Pirate1.posX], 
-             Pirate2: map.islandMap[Pirate2.posY][Pirate2.posX]}"""
+             Pirate2: map.islandMap[Pirate2.posY][Pirate2.posX]}
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
     '''
@@ -28,7 +28,7 @@ def encounterActions(action, room):
     #if room.actions[action] = True, the action has already been completed
     if "Camp" in str(room):
         if action == "Fight the pirates":
-            #Combat()
+            Combat()
             room.actions[action] = True
             room.description = "\nIt's where you fought a pirate camp"
             print("You beat the pirates")
@@ -42,7 +42,7 @@ def encounterActions(action, room):
             print("You have picked up the key")
     elif "Patrol" in str(room):
         if action == "Fight the pirates":
-            #Combat()
+            Combat()
             room.actions[action] = True
             room.description = "\nIt's where you fought a pirate patrol"
             print("You beat the pirates")
@@ -107,21 +107,59 @@ def encounterActions(action, room):
             print(f'You have {Player1.coconuts} coconuts')
 
 
-"""def Combat():
+def Combat():
+    '''a function that handles battles'''
     combatList = []
     for object in enemyDict:
         if enemyDict[object] == map.islandMap[Player1.posY][Player1.posX]:
             combatList.append(object)
-    print("\nYou have entered combat")
     while True:
+        print("\nYou are in combat")
         for target in range(len(combatList)):
-            print(f"-{combatList[target]}{target + 1}")
-        choice = input("-")
-        if choice in combatList:
-            break
+            print(f"-{target + 1}.{combatList[target]}")
+        try:
+            choice = int(input("-"))
+        except ValueError:
+            print("\nPlease choose one of the listed numbers")
+            continue
+        if 1 <= choice <= len(combatList):
+            #print(choice)
+            while True:
+                print(f"\n{choice}.Pirate")
+                print("-Check\n-Attack\n-Back")
+                action = input("-").capitalize()
+                if action == "Check":
+                    combatList[choice-1].Check()
+                    for target in combatList:
+                        target.CountDown()
+                    break
+                elif action == "Attack":
+                    print("\nYou have hit the Pirate")
+                    combatList[choice-1].ChangeHP(Player1.attack)
+                    for target in combatList:
+                        #print("counting down")
+                        target.CountDown()
+                        #print(target.attackTimer)
+                    break
+                elif action == "Back":
+                    break
+                else:
+                    print("Invalid action")
         else:
-            print(combatList)
-            break"""
+            print("\nPlease choose one of the listed numbers")
+        for target in combatList:
+            if target.hp <= 0:
+                combatList.remove(target)
+                #print(combatList)
+                #print(enemyDict)
+        for target in combatList:
+            if target.attackTimer == target.attackCooldown:
+                print(f"\nYou have been attacked by {str(target)}")
+                Player1.ChangeHP(target.attack)
+                target.attackTimer = 0
+            #print(target.attackTimer)
+        if len(combatList) == 0:
+            break
 
 
 def mainMenu():

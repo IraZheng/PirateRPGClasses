@@ -23,5 +23,5 @@ class Pirate(Enemy):
 
     def Check(self):
         print(f"hp: {self.hp}")
-        print(f"attack: {self.attack}")
+        print(f"attack: {-self.attack}")
 
