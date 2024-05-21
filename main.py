@@ -17,8 +17,20 @@ Player1 = player.Player(0, 1, 0, False, False, False, 10, 1)
 #add enemies here
 Pirate1 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 Pirate2 = enemy.Pirate(0, 2, 3, 1, 2, 0)
-enemyDict = {Pirate1: map.islandMap[Pirate1.posY][Pirate1.posX], 
-             Pirate2: map.islandMap[Pirate2.posY][Pirate2.posX]}
+Pirate3 = enemy.Pirate(1, 1, 3, 1, 2, 0)
+Pirate4 = enemy.Pirate(1, 1, 3, 1, 2, 0)
+Pirate5 = enemy.Pirate(2, 0, 3, 1, 2, 0)
+Pirate6 = enemy.Pirate(2, 0, 3, 1, 2, 0)
+Pirate7 = enemy.Pirate(2, 0, 3, 1, 2, 0)
+Pirate8 = enemy.Pirate(2, 2, 3, 1, 2, 0)
+Pirate9 = enemy.Pirate(2, 2, 3, 1, 2, 0)
+Pirate10 = enemy.Pirate(2, 2, 3, 1, 2, 0)
+Pirate11 = enemy.Pirate(3, 1, 3, 1, 2, 0)
+Pirate12 = enemy.Pirate(3, 1, 3, 1, 2, 0)
+Pirate13 = enemy.Pirate(3, 1, 3, 1, 2, 0)
+
+enemyList = [Pirate1, Pirate2, Pirate3, Pirate4, Pirate5, Pirate6, Pirate7,
+            Pirate8, Pirate9, Pirate10, Pirate11, Pirate12, Pirate13]
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
     '''
@@ -29,7 +41,7 @@ def encounterActions(action, room):
     #if room.actions[action] = True, the action has already been completed
     if "Camp" in str(room):
         if action == "Fight the pirates":
-            Combat()
+            combat()
             if not Player1.hp <= 0:
                 room.actions[action] = True
                 room.description = "\nIt's where you fought a pirate camp"
@@ -44,7 +56,7 @@ def encounterActions(action, room):
             print("You have picked up the key")
     elif "Patrol" in str(room):
         if action == "Fight the pirates":
-            Combat()
+            combat()
             if not Player1.hp <= 0:
                 room.actions[action] = True
                 room.description = "\nIt's where you fought a pirate patrol"
@@ -110,11 +122,12 @@ def encounterActions(action, room):
             print(f'You have {Player1.coconuts} coconuts')
 
 
-def Combat():
+def combat():
     '''a function that handles battles'''
     combatList = []
-    for object in enemyDict:
-        if enemyDict[object] == map.islandMap[Player1.posY][Player1.posX]:
+    for object in enemyList:
+        if (map.islandMap[object.posY][object.posX] == 
+            map.islandMap[Player1.posY][Player1.posX]):
             combatList.append(object)
     while True:
         print("\nYou are in combat")
@@ -153,8 +166,10 @@ def Combat():
         for target in combatList:
             if target.hp <= 0:
                 combatList.remove(target)
+                #del(target)
+                enemyList.remove(target)
                 #print(combatList)
-                #print(enemyDict)
+                #print(enemyList)
         for target in combatList:
             if target.attackTimer == target.attackCooldown:
                 print(f"\nYou have been attacked by {str(target)}")
@@ -179,7 +194,7 @@ def mainMenu():
         if ("Trap" in str(playerLocation) and 
             not playerLocation.actions["Disable trap"]):
             print("You take damage from the spikes!")
-            Player1.ChangeHP(-1)
+            Player1.ChangeHP(-3)
         if Player1.hp >= 1:
             print("What do you do?")
             #prints action as an option if action is not completed yet
