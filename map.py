@@ -7,6 +7,7 @@ from tabulate import tabulate
 
 #Tile classes
 class Tile():
+    '''base class for tiles'''
     def __init__(self):
         """this is always overwritten in the child classes"""
         self.description = "description"

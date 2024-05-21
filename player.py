@@ -7,6 +7,16 @@ import map
 class Player():
     def __init__(self, posX, posY, coconuts, hasShovel, 
                  hasKey, hasTreasure, hp, attack):
+        '''
+        posX: the x position of the player
+        posY: the y position of the player
+        coconuts: the number of coconuts the player has
+        hasShovel: a bool if the player has the shovel
+        hasKey: a bool if the player has the key
+        hasTreasure: a bool if the player has the treasure
+        hp: the health of the player
+        attack: the attack of the player
+        '''
         #position
         self.posX = posX
         self.posY = posY
@@ -79,9 +89,11 @@ class Player():
             print("-No treasure")
 
     def ChangeHP(self, amountToChange):
+        """changes the player's hp"""
         self.hp += amountToChange
         print(f"you have {self.hp} hp")
 
     def PrintStatus(self):
+        """prints the player's hp and attack"""
         print(f"you have {self.hp} hp")
         print(f"you have {-self.attack} attack")

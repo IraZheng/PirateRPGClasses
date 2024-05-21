@@ -14,6 +14,7 @@ import player
 
 Player1 = player.Player(0, 1, 0, False, False, False, 10, 1)
 
+#add enemies here
 Pirate1 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 Pirate2 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 enemyDict = {Pirate1: map.islandMap[Pirate1.posY][Pirate1.posX], 
@@ -29,9 +30,10 @@ def encounterActions(action, room):
     if "Camp" in str(room):
         if action == "Fight the pirates":
             Combat()
-            room.actions[action] = True
-            room.description = "\nIt's where you fought a pirate camp"
-            print("You beat the pirates")
+            if not Player1.hp <= 0:
+                room.actions[action] = True
+                room.description = "\nIt's where you fought a pirate camp"
+                print("You beat the pirates")
     elif "Key" in str(room):
         if action == "Pick up the key":
             Player1.hasKey = True
@@ -43,9 +45,10 @@ def encounterActions(action, room):
     elif "Patrol" in str(room):
         if action == "Fight the pirates":
             Combat()
-            room.actions[action] = True
-            room.description = "\nIt's where you fought a pirate patrol"
-            print("You beat the pirates")
+            if not Player1.hp <= 0:
+                room.actions[action] = True
+                room.description = "\nIt's where you fought a pirate patrol"
+                print("You beat the pirates")
     elif "Shovel" in str(room):
         if action == "Pick up the shovel":
             Player1.hasShovel = True
@@ -158,6 +161,8 @@ def Combat():
                 Player1.ChangeHP(target.attack)
                 target.attackTimer = 0
             #print(target.attackTimer)
+        if Player1.hp <= 0:
+            break
         if len(combatList) == 0:
             break
 
