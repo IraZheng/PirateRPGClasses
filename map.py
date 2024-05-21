@@ -67,7 +67,7 @@ class Start(Tile):
 
 
     def __str__(self):
-        return("Shovel")
+        return("Start")
 
 
 class Trap(Tile):
