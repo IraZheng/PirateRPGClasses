@@ -124,45 +124,59 @@ def encounterActions(action, room):
 
 def combat():
     '''a function that handles battles'''
+    #creates a combat list with the pirates in the same room as you
     combatList = []
     for object in enemyList:
         if (map.islandMap[object.posY][object.posX] == 
             map.islandMap[Player1.posY][Player1.posX]):
             combatList.append(object)
+    #combat option loop
     while True:
         print("\nYou are in combat")
         for target in range(len(combatList)):
             print(f"-{target + 1}.{combatList[target]}")
-        try:
-            choice = int(input("-"))
-        except ValueError:
-            print("\nPlease choose one of the listed numbers")
-            continue
-        if 1 <= choice <= len(combatList):
-            #print(choice)
-            while True:
-                print(f"\n{choice}.Pirate")
-                print("-Check\n-Attack\n-Back")
-                action = input("-").capitalize()
-                if action == "Check":
-                    combatList[choice-1].Check()
-                    for target in combatList:
-                        target.CountDown()
-                    break
-                elif action == "Attack":
-                    print("\nYou have hit the Pirate")
-                    combatList[choice-1].ChangeHP(Player1.attack)
-                    for target in combatList:
-                        #print("counting down")
-                        target.CountDown()
-                        #print(target.attackTimer)
-                    break
-                elif action == "Back":
-                    break
-                else:
-                    print("Invalid action")
+        #allows use of coconuts during battle
+        if Player1.coconuts > 0:
+            print("-Use a coconut")
+        choice = input("-").capitalize()
+        if choice == "Use a coconut" and Player1.coconuts > 0:
+            Player1.coconuts -= 1
+            print("\nYou have used a coconut")
+            print(f"You have {Player1.coconuts} coconuts left")
+            Player1.ChangeHP(1)
+            for target in combatList:
+                target.CountDown()
         else:
-            print("\nPlease choose one of the listed numbers")
+            #uses numbers to differentiate the different enemies
+            try:
+                numChoice = int(choice)
+            except ValueError:
+                print("\nPlease choose one of the listed numbers")
+                continue
+            if 1 <= numChoice <= len(combatList):
+                #enemy loop
+                while True:
+                    print(f"\n{numChoice}.Pirate")
+                    print("-Check\n-Attack\n-Back")
+                    action = input("-").capitalize()
+                    if action == "Check":
+                        combatList[numChoice-1].Check()
+                        for target in combatList:
+                            target.CountDown()
+                        break
+                    elif action == "Attack":
+                        print("\nYou have hit the Pirate")
+                        combatList[numChoice-1].ChangeHP(Player1.attack)
+                        for target in combatList:
+                            target.CountDown()
+                            #print(target.attackTimer)
+                        break
+                    elif action == "Back":
+                        break
+                    else:
+                        print("Invalid action")
+            else:
+                print("\nPlease choose one of the listed numbers")
         for target in combatList:
             if target.hp <= 0:
                 combatList.remove(target)
@@ -226,6 +240,8 @@ def mainMenu():
             #heals by 1 when using a coconut
             elif Player1.coconuts > 0 and choice == "Use a coconut":
                 Player1.coconuts -= 1
+                print("\n You have used a coconut")
+                print(f"You have {Player1.coconuts} coconuts left")
                 Player1.ChangeHP(1)
             elif choice == "Check status":
                 Player1.PrintStatus()
