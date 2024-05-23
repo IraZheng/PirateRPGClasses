@@ -12,7 +12,7 @@ import enemy
 import map
 import player
 
-Player1 = player.Player(0, 1, 0, False, False, False, 10, 1)
+Player1 = player.Player(0, 1, 0, False, False, False, 10, 10, 1)
 
 #add enemies here
 Pirate1 = enemy.Pirate(0, 2, 3, 1, 2, 0)
@@ -140,12 +140,15 @@ def combat():
             print("-Use a coconut")
         choice = input("-").capitalize()
         if choice == "Use a coconut" and Player1.coconuts > 0:
-            Player1.coconuts -= 1
-            print("\nYou have used a coconut")
-            print(f"You have {Player1.coconuts} coconuts left")
-            Player1.ChangeHP(1)
-            for target in combatList:
-                target.CountDown()
+            if Player1.hp < Player1.maxHP:
+                Player1.coconuts -= 1
+                print("\nYou have used a coconut")
+                print(f"You have {Player1.coconuts} coconuts left")
+                Player1.ChangeHP(1)
+                for target in combatList:
+                    target.CountDown()
+            else:
+                print("You are already at max hp")
         else:
             #uses numbers to differentiate the different enemies
             try:
@@ -239,10 +242,13 @@ def mainMenu():
                 encounterActions(choice, playerLocation)
             #heals by 1 when using a coconut
             elif Player1.coconuts > 0 and choice == "Use a coconut":
-                Player1.coconuts -= 1
-                print("\n You have used a coconut")
-                print(f"You have {Player1.coconuts} coconuts left")
-                Player1.ChangeHP(1)
+                if Player1.hp < Player1.maxHP:
+                    Player1.coconuts -= 1
+                    print("\nYou have used a coconut")
+                    print(f"You have {Player1.coconuts} coconuts left")
+                    Player1.ChangeHP(1)
+                else:
+                    print("You are already at max hp")
             elif choice == "Check status":
                 Player1.PrintStatus()
             elif choice == "Inventory":

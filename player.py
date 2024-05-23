@@ -6,7 +6,7 @@ import map
 
 class Player():
     def __init__(self, posX, posY, coconuts, hasShovel, 
-                 hasKey, hasTreasure, hp, attack):
+                 hasKey, hasTreasure, hp, maxHP, attack):
         '''
         posX: the x position of the player
         posY: the y position of the player
@@ -27,6 +27,7 @@ class Player():
         self.hasTreasure = hasTreasure
         #combat
         self.hp = hp
+        self.maxHP = maxHP
         self.attack = -attack
 
 
