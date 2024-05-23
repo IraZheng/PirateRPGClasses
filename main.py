@@ -39,13 +39,16 @@ def encounterActions(action, room):
     room: the room the player is in
     '''
     #if room.actions[action] = True, the action has already been completed
+    #for camp rooms
     if "Camp" in str(room):
         if action == "Fight the pirates":
             combat()
+            #you beat the pirates if hp > 0
             if not Player1.hp <= 0:
                 room.actions[action] = True
                 room.description = "\nIt's where you fought a pirate camp"
                 print("You beat the pirates")
+    #for key room
     elif "Key" in str(room):
         if action == "Pick up the key":
             Player1.hasKey = True
@@ -54,13 +57,16 @@ def encounterActions(action, room):
             #change key description
             room.description = "\nThis is where you found the key"
             print("You have picked up the key")
+    #for patrol room
     elif "Patrol" in str(room):
         if action == "Fight the pirates":
             combat()
+            #you beat the pirates if hp > 0
             if not Player1.hp <= 0:
                 room.actions[action] = True
                 room.description = "\nIt's where you fought a pirate patrol"
                 print("You beat the pirates")
+    #for shovel room
     elif "Shovel" in str(room):
         if action == "Pick up the shovel":
             Player1.hasShovel = True
@@ -69,23 +75,29 @@ def encounterActions(action, room):
             #change shovel description
             room.description = "\nThis is where you found the shovel"
             print("You have picked up the shovel")
+    #start room should have no actions
     elif "Start" in str(room):
         pass
+    #trap room
     elif "Trap" in str(room):
         if action == "Disable trap":
             room.actions[action] = True
             room.description = "\nIt's a disabled trap"
             print("Trap disabled!")
+    #treasure room
     elif "Treasure" in str(room):
         if action == "Dig":
+            #can only dig if you have the shovel
             if Player1.hasShovel:
                 print("You have dug up the treasure")
+                #unlocks the unlock option lol
                 room.actions[action] = True
                 room.actions["Unlock"] = False
                 room.description = "\nIt's a locked treasure chest"
             else:
                 print("You need a shovel to dig up the treasure!")
         elif action == "Unlock":
+            #check for key
             if Player1.hasKey:
                 print("You have unlocked the treasure")
                 room.actions[action] = True
@@ -94,18 +106,22 @@ def encounterActions(action, room):
             else:
                 print("You do not have a key")
         elif action == "Take the treasure":
+            #win
             room.actions[action] = False
             print("\nYou have obtained the pirates treasure!")
             room.description = "\nIt's an empty treasure chest"
             Player1.hasTreasure = True
             print("Congratulations! \nYou have beat the game!")
+            #end of game loop
             invalidChoice = True
             while invalidChoice:
                 print("Do you wish to continue playing\n-Yes \n-No")
                 choice = input("-").capitalize()
                 if choice == "Yes":
+                    #resets the chest to before taking the trasure
                     print("You put the treasure back in the chest")
                     print("Come back and pick it up when you want to")
+                    #main menu loop is controlled by hasTreasure
                     Player1.hasTreasure = False
                     room.actions["Unlock"] = True
                     room.actions[action] = False
@@ -116,10 +132,14 @@ def encounterActions(action, room):
                     invalidChoice = False
                 else:
                     print('Please choose "Yes" or "No"')
+    #for tree room
     elif "Tree" in str(room):
         if action == "Pick a coconut":
-            Player1.coconuts += 1
-            print(f'You have {Player1.coconuts} coconuts')
+            if Player1.coconuts < 10:
+                Player1.coconuts += 1
+                print(f'You have {Player1.coconuts} coconuts')
+            else:
+                print("You cannot carry any more coconuts")
 
 
 def combat():
@@ -180,6 +200,7 @@ def combat():
                         print("Invalid action")
             else:
                 print("\nPlease choose one of the listed numbers")
+        #removes dead enemies from the lists
         for target in combatList:
             if target.hp <= 0:
                 combatList.remove(target)
@@ -187,12 +208,14 @@ def combat():
                 enemyList.remove(target)
                 #print(combatList)
                 #print(enemyList)
+        #alive enemies will attack if their cooldown is up
         for target in combatList:
             if target.attackTimer == target.attackCooldown:
                 print(f"\nYou have been attacked by {str(target)}")
                 Player1.ChangeHP(target.attack)
                 target.attackTimer = 0
             #print(target.attackTimer)
+        #exits combat loop if player dies or all enemies die
         if Player1.hp <= 0:
             break
         if len(combatList) == 0:
@@ -204,6 +227,7 @@ def mainMenu():
     Main menu
     allows player to choose options and run code
     """
+    #while the player hasn't won
     while not Player1.hasTreasure:
         playerLocation = map.islandMap[Player1.posY][Player1.posX]
         print(playerLocation.description)
@@ -212,6 +236,7 @@ def mainMenu():
             not playerLocation.actions["Disable trap"]):
             print("You take damage from the spikes!")
             Player1.ChangeHP(-3)
+        #if the player is alive
         if Player1.hp >= 1:
             print("What do you do?")
             #prints action as an option if action is not completed yet
@@ -242,6 +267,7 @@ def mainMenu():
                 encounterActions(choice, playerLocation)
             #heals by 1 when using a coconut
             elif Player1.coconuts > 0 and choice == "Use a coconut":
+                #cannot heal at max hp
                 if Player1.hp < Player1.maxHP:
                     Player1.coconuts -= 1
                     print("\nYou have used a coconut")

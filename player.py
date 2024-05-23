@@ -15,6 +15,7 @@ class Player():
         hasKey: a bool if the player has the key
         hasTreasure: a bool if the player has the treasure
         hp: the health of the player
+        maxHP: the most health the player can have at any given time
         attack: the attack of the player
         '''
         #position
