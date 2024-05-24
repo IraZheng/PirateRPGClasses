@@ -31,7 +31,6 @@ Pirate13 = enemy.Pirate(3, 1, 3, 1, 2, 0)
 #list of all enemies
 enemyList = [Pirate1, Pirate2, Pirate3, Pirate4, Pirate5, Pirate6, Pirate7,
             Pirate8, Pirate9, Pirate10, Pirate11, Pirate12, Pirate13]
-#map/tile setup
 #initializing tiles
 Tree1 = map.Tree()
 Trap1 = map.Trap()
