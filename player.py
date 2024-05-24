@@ -110,6 +110,6 @@ class Player():
     
     def PrintStatus(self):
         """prints the player's hp and attack"""
-        print(f"you have {self.hp} hp")
+        print(f"\nyou have {self.hp} hp")
         print(f"you have {-self.attack} attack")
 

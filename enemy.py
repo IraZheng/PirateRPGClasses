@@ -37,7 +37,7 @@ class Enemy():
     
     def Check(self):
         '''checks the enemy'''
-        print(f"hp: {self.hp}")
+        print(f"\nhp: {self.hp}")
         print(f"attack: {-self.attack}")
 
 

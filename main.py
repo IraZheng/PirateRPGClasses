@@ -141,7 +141,7 @@ def encounterActions(action, room):
                 choice = input("-").capitalize()
                 if choice == "Yes":
                     #resets the chest to before taking the trasure
-                    print("You put the treasure back in the chest")
+                    print("\nYou put the treasure back in the chest")
                     print("Come back and pick it up when you want to")
                     #main menu loop is controlled by hasTreasure
                     Player1.hasTreasure = False
@@ -153,7 +153,7 @@ def encounterActions(action, room):
                     print("Goodbye!")
                     invalidChoice = False
                 else:
-                    print('Please choose "Yes" or "No"')
+                    print('\nPlease choose "Yes" or "No"')
     #for tree room
     elif "Tree" in str(room):
         if action == "Pick a coconut":
