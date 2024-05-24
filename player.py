@@ -98,12 +98,15 @@ class Player():
         else:
             print("-No treasure")
 
+    
     def ChangeHP(self, amountToChange):
         """changes the player's hp"""
         self.hp += amountToChange
         print(f"you have {self.hp} hp")
 
+    
     def PrintStatus(self):
         """prints the player's hp and attack"""
         print(f"you have {self.hp} hp")
         print(f"you have {-self.attack} attack")
+

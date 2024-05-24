@@ -19,19 +19,23 @@ class Enemy():
         self.attackCooldown = attackCooldown
         self.attackTimer = attackTimer
 
+    
     def ChangeHP(self, amountToChange):
         """changes the enemie's hp"""
         self.hp += amountToChange
         print(f"They have {self.hp} hp left")
 
+    
     def CountDown(self):
         '''let enemy timer go up'''
         self.attackTimer += 1
+
 
 class Pirate(Enemy):
     def __str__(self):
         return("Pirate")
 
+    
     def Check(self):
         '''checks the pirate'''
         print(f"hp: {self.hp}")
