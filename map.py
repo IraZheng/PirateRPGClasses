@@ -137,10 +137,9 @@ Key1 = Key()
 islandMap = [[Tree1, Trap1, Camp1, Treasure1], 
              [Start1, Patrol1, Shovel1, Camp2], 
              [Patrol2, Trap2, Camp3, Key1]]
-
-
 #map export file
 mapFile = 'map.txt'
+
 
 def mapExport():
     '''Exports the map to an external file'''

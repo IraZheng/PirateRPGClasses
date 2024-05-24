@@ -32,6 +32,8 @@ Pirate13 = enemy.Pirate(3, 1, 3, 1, 2, 0)
 
 enemyList = [Pirate1, Pirate2, Pirate3, Pirate4, Pirate5, Pirate6, Pirate7,
             Pirate8, Pirate9, Pirate10, Pirate11, Pirate12, Pirate13]
+
+
 # Functions -------------------------------------------------------------------
 def encounterActions(action, room):
     '''
