@@ -14,8 +14,7 @@ import player
 
 #player setup
 Player1 = player.Player(0, 1, 0, False, False, False, 10, 10, 1)
-
-#add enemies here
+#Enemy setup
 Pirate1 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 Pirate2 = enemy.Pirate(0, 2, 3, 1, 2, 0)
 Pirate3 = enemy.Pirate(1, 1, 3, 1, 2, 0)
@@ -29,9 +28,29 @@ Pirate10 = enemy.Pirate(2, 2, 3, 1, 2, 0)
 Pirate11 = enemy.Pirate(3, 1, 3, 1, 2, 0)
 Pirate12 = enemy.Pirate(3, 1, 3, 1, 2, 0)
 Pirate13 = enemy.Pirate(3, 1, 3, 1, 2, 0)
-
+#list of all enemies
 enemyList = [Pirate1, Pirate2, Pirate3, Pirate4, Pirate5, Pirate6, Pirate7,
             Pirate8, Pirate9, Pirate10, Pirate11, Pirate12, Pirate13]
+#map/tile setup
+#initializing tiles
+Tree1 = map.Tree()
+Trap1 = map.Trap()
+Camp1 = map.Camp()
+Treasure1 = map.Treasure()
+Start1 = map.Start()
+Patrol1 = map.Patrol()
+Shovel1 = map.Shovel()
+Camp2 = map.Camp()
+Patrol2 = map.Patrol()
+Trap2 = map.Trap()
+Camp3 = map.Camp()
+Key1 = map.Key()
+#Map
+islandMap = [[Tree1, Trap1, Camp1, Treasure1], 
+             [Start1, Patrol1, Shovel1, Camp2], 
+             [Patrol2, Trap2, Camp3, Key1]]
+#map export file
+mapFile = 'map.txt'
 
 
 # Functions -------------------------------------------------------------------
@@ -150,8 +169,8 @@ def combat():
     #creates a combat list with the pirates in the same room as you
     combatList = []
     for object in enemyList:
-        if (map.islandMap[object.posY][object.posX] == 
-            map.islandMap[Player1.posY][Player1.posX]):
+        if (islandMap[object.posY][object.posX] == 
+            islandMap[Player1.posY][Player1.posX]):
             combatList.append(object)
     #combat option loop
     while True:
@@ -232,7 +251,7 @@ def mainMenu():
     """
     #while the player hasn't won
     while not Player1.hasTreasure:
-        playerLocation = map.islandMap[Player1.posY][Player1.posX]
+        playerLocation = islandMap[Player1.posY][Player1.posX]
         print(playerLocation.description)
         #if you are in trap room
         if ("Trap" in str(playerLocation) and 
@@ -258,12 +277,12 @@ def mainMenu():
                     "Patrol" in str(playerLocation)):
                     if playerLocation.actions["Fight the pirates"]:
                         print("Okay!\n")
-                        Player1.Move()
+                        Player1.Move(islandMap)
                     else:
                         print("The pirates are blocking your way!")
                 else:
                     print("Okay!\n")
-                    Player1.Move()
+                    Player1.Move(islandMap)
             #if it is a valid action and the action is not completed yet
             elif (choice in playerLocation.actions and 
                   not playerLocation.actions[choice]):
@@ -283,7 +302,7 @@ def mainMenu():
             elif choice == "Inventory":
                 Player1.PrintInv()
             elif choice == "Map":
-                map.viewMap()
+                map.viewMap(mapFile)
             elif choice == "Quit":
                 print("\nYou have quit your adventure")
                 break
@@ -304,5 +323,5 @@ def intro():
 
 # Main ------------------------------------------------------------------------
 intro()
-map.mapExport()
+map.mapExport(islandMap, mapFile)
 mainMenu()

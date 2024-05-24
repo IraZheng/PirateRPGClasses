@@ -1,9 +1,6 @@
 ###############################################################################
 # Player Module
 ###############################################################################
-import map
-
-
 class Player():
     def __init__(self, posX, posY, coconuts, hasShovel, 
                  hasKey, hasTreasure, hp, maxHP, attack):
@@ -32,16 +29,19 @@ class Player():
         self.attack = -attack
 
 
-    def Move(self):
-        """Allows players to move through the map"""
+    def Move(self, map):
+        """
+        Allows players to move through the map
+        map: the map that the player is moving on
+        """
         while True:
             print("Which direction do you move?")
             #prints movement options
             if self.posY > 0:
                 print("-Move north")
-            if self.posY < (len(map.islandMap) - 1):
+            if self.posY < (len(map) - 1):
                 print("-Move south")
-            if self.posX < (len(map.islandMap[self.posY]) - 1):
+            if self.posX < (len(map[self.posY]) - 1):
                 print("-Move east")
             if self.posX > 0:
                 print("-Move west")
@@ -57,13 +57,13 @@ class Player():
                 else:
                     print("Thats the end of the island, you can't go there!\n")
             elif moveChoice == "south":
-                if self.posY < (len(map.islandMap) - 1):
+                if self.posY < (len(map) - 1):
                     self.posY += 1
                     break
                 else:
                     print("Thats the end of the island, you can't go there!\n")
             elif moveChoice == "east":
-                if self.posX < (len(map.islandMap[self.posY]) - 1):
+                if self.posX < (len(map[self.posY]) - 1):
                     self.posX += 1
                     break
                 else:
@@ -100,7 +100,10 @@ class Player():
 
     
     def ChangeHP(self, amountToChange):
-        """changes the player's hp"""
+        """
+        changes the player's hp
+        amountToChange: the change in hp
+        """
         self.hp += amountToChange
         print(f"you have {self.hp} hp")
 

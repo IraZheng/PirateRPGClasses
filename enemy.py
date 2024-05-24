@@ -2,6 +2,7 @@
 # Enemy Module
 ###############################################################################
 class Enemy():
+    '''base class for enemies'''
     def __init__(self, posX, posY, hp, attack, attackCooldown, attackTimer):
         '''
         posX: the x position of the enemy
@@ -21,7 +22,10 @@ class Enemy():
 
     
     def ChangeHP(self, amountToChange):
-        """changes the enemie's hp"""
+        """
+        changes the enemies' hp
+        amountToChange: the change in hp
+        """
         self.hp += amountToChange
         print(f"They have {self.hp} hp left")
 
@@ -30,14 +34,15 @@ class Enemy():
         '''let enemy timer go up'''
         self.attackTimer += 1
 
+    
+    def Check(self):
+        '''checks the enemy'''
+        print(f"hp: {self.hp}")
+        print(f"attack: {-self.attack}")
+
 
 class Pirate(Enemy):
     def __str__(self):
+        '''display name'''
         return("Pirate")
-
-    
-    def Check(self):
-        '''checks the pirate'''
-        print(f"hp: {self.hp}")
-        print(f"attack: {-self.attack}")
 

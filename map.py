@@ -120,32 +120,15 @@ class Tree(Tile):
         return("Tree")
 
 
-#initializing tiles
-Tree1 = Tree()
-Trap1 = Trap()
-Camp1 = Camp()
-Treasure1 = Treasure()
-Start1 = Start()
-Patrol1 = Patrol()
-Shovel1 = Shovel()
-Camp2 = Camp()
-Patrol2 = Patrol()
-Trap2 = Trap()
-Camp3 = Camp()
-Key1 = Key()
-#Map
-islandMap = [[Tree1, Trap1, Camp1, Treasure1], 
-             [Start1, Patrol1, Shovel1, Camp2], 
-             [Patrol2, Trap2, Camp3, Key1]]
-#map export file
-mapFile = 'map.txt'
-
-
-def mapExport():
-    '''Exports the map to an external file'''
+def mapExport(map, fileName):
+    '''
+    Exports the map to an external file
+    map: the actual map that is saved
+    fileName: the file for the map
+    '''
     try:
-        with open(mapFile, "w") as file:
-            file.write(tabulate(islandMap, tablefmt = "fancy_grid"))
+        with open(fileName, "w") as file:
+            file.write(tabulate(map, tablefmt = "fancy_grid"))
         print("Your map has been updated")
     except:
         print("Unable to export map")
@@ -155,10 +138,13 @@ def mapExport():
         print("Maybe that will help")
 
 
-def viewMap():
-    '''Prints the map from an external file'''
+def viewMap(fileName):
+    '''
+    Prints the map from an external file
+    fileName: the file for the map
+    '''
     try:
-        with open(mapFile, "r") as file:
+        with open(fileName, "r") as file:
             print(file.read())
     except:
         print("Unable to read map")
