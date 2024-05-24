@@ -36,8 +36,16 @@ class Player():
         """Allows players to move through the map"""
         while True:
             print("Which direction do you move?")
-            #prints movement variable
-            print("-Move north \n-Move south \n-Move east \n-Move west")
+            #prints movement options
+            if self.posY > 0:
+                print("-Move north")
+            if self.posY < (len(map.islandMap) - 1):
+                print("-Move south")
+            if self.posX < (len(map.islandMap[self.posY]) - 1):
+                print("-Move east")
+            if self.posX > 0:
+                print("-Move west")
+            #print("-Move north \n-Move south \n-Move east \n-Move west")
             print("-Back")
             #default input is a string so I can use .lower()
             moveChoice = input("-").lower()

@@ -12,6 +12,7 @@ import enemy
 import map
 import player
 
+#player setup
 Player1 = player.Player(0, 1, 0, False, False, False, 10, 10, 1)
 
 #add enemies here
